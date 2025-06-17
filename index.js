@@ -16,7 +16,9 @@ app.get("/buscar", async (req, res) => {
       const { data } = await axios.get(url, { timeout: 5000 });
       const encontrou = load(data)("div[class*=job-listing]").length > 0;
       if (encontrou) resultados.push(url);
-    } catch {}
+    } catch (error) {
+      console.error(`Erro ao buscar em ${url}:`, error.message);
+    }
   }));
   res.json({ resultados });
 });
